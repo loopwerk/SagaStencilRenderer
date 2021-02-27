@@ -1,5 +1,5 @@
 # SagaStencilRenderer
-A renderer for [Stencil](https://github.com/loopwerk/Saga) that uses [Stencil](https://github.com/stencilproject/Stencil) to turn a RenderingContext into a String.
+A renderer for [Saga](https://github.com/loopwerk/Saga) that uses [Stencil](https://github.com/stencilproject/Stencil) to turn a RenderingContext into a String.
 
 It comes with a free function named `stencil` which takes an HTML template and a Stencil `Environment`, and returns a function that goes from `RenderingContext` to `String`, which can then be plugged into Saga's writers.
 
