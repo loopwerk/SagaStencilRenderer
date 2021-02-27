@@ -17,9 +17,9 @@ let package = Package(
     .macOS(.v10_15)
   ],
   dependencies: [
-    .package(url: "https://github.com/loopwerk/Saga", from: "0.19.0"),
+    .package(url: "https://github.com/loopwerk/Saga", from: "0.21.0"),
     .package(url: "https://github.com/loopwerk/SagaParsleyMarkdownReader", from: "0.4.0"),
-    .package(url: "https://github.com/loopwerk/SagaStencilRenderer", from: "0.1.0")
+    .package(url: "https://github.com/loopwerk/SagaStencilRenderer", from: "0.2.0")
   ],
   targets: [
     .target(

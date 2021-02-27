@@ -1,9 +1,9 @@
 import Stencil
 import Saga
 
-public func stencil(_ template: String, environment: Environment) -> ((RenderingContext) -> String) {
+public func stencil(_ template: String, environment: Environment) -> ((RenderingContext) throws -> String) {
   return { context in
-    return try! environment.renderTemplate(name: template, context: context.asDictionary())
+    return try environment.renderTemplate(name: template, context: context.asDictionary())
   }
 }
 
