@@ -71,16 +71,16 @@ func getEnvironment(root: Path) -> Environment {
   let ext = Extension()
   
   ext.registerFilter("url") { (value: Any?) in
-	  guard let item = value as? AnyItem else {
-	    return ""
-	  }
-	  var url = "/" + item.relativeDestination.string
-	  if url.hasSuffix("/index.html") {
-	    url.removeLast(10)
-	  }
-	  return url
-	}
+    guard let item = value as? AnyItem else {
+      return ""
+    }
+    var url = "/" + item.relativeDestination.string
+    if url.hasSuffix("/index.html") {
+      url.removeLast(10)
+    }
+    return url
+  }
 
-  Return Environment(loader: FileSystemLoader(paths: [root + "templates"]), extensions: [ext])
+  return Environment(loader: FileSystemLoader(paths: [root + "templates"]), extensions: [ext])
 }
 ```
