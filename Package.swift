@@ -1,17 +1,20 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.5
 
 import PackageDescription
 
 let package = Package(
   name: "SagaStencilRenderer",
+  platforms: [
+    .macOS(.v12)
+  ],
   products: [
     .library(
       name: "SagaStencilRenderer",
       targets: ["SagaStencilRenderer"]),
   ],
   dependencies: [
-    .package(url: "https://github.com/loopwerk/PathKit", from: "1.1.0"),
-    .package(url: "https://github.com/loopwerk/Saga", from: "0.21.0"),
+    .package(url: "https://github.com/loopwerk/PathKit", from: "1.2.0"),
+    .package(url: "https://github.com/loopwerk/Saga", from: "1.0.0"),
     .package(url: "https://github.com/stencilproject/Stencil", from: "0.14.0"),
   ],
   targets: [
