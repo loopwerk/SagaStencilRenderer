@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}: Apps{% endblock %}
+
+{% block main %}
+<div id="content">
+  {% for item in items %}
+  <section>
+    {% for src in item.metadata.images %}
+      <img src="{{ src }}" alt="" />
+    {% endfor %}
+    <h1>{{ item.title }}</h1>
+    {{ item.body }}
+    
+    {% if item.metadata.url %}
+      <a href="{{ item.metadata.url }}">App Store</a>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

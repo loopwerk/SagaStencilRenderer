@@ -5,32 +5,36 @@ import SagaParsleyMarkdownReader
 import SagaStencilRenderer
 import Stencil
 
-// SiteMetadata is given to every template.
-// You can put whatever you want in here, as long as it's Decodable.
-struct SiteMetadata: Metadata {
-  let url: URL
-  let name: String
+struct AppMetadata: Metadata {
+  let url: URL?
+  let images: [String]?
 }
-
-let siteMetadata = SiteMetadata(
-  url: URL(string: "http://www.example.com")!,
-  name: "Example website"
-)
 
 @main
 struct Run {
   static func main() async throws {
-    let saga = try Saga(input: "content", output: "deploy", siteMetadata: siteMetadata)
+    let saga = try Saga(input: "content", output: "deploy")
+    defaultStencilEnvironment = Environment(loader: FileSystemLoader(paths: [saga.rootPath + "templates"]))
 
     try await saga
+      // All markdown files within the "apps" subfolder will be parsed to html,
+      // using AppMetadata as the Item's metadata type.
+        .register(
+          folder: "apps",
+          metadata: AppMetadata.self,
+          readers: [.parsleyMarkdownReader()],
+          writers: [
+            .listWriter(stencil("apps.html"))
+          ]
+        )
+    
       // All the Markdown files will be parsed to html,
       // using the default EmptyMetadata as the Item's metadata type.
       .register(
-        metadata: EmptyMetadata.self,
         readers: [.parsleyMarkdownReader()],
         itemWriteMode: .keepAsFile,
         writers: [
-          .itemWriter(stencil("page.html", environment: getEnvironment(root: saga.rootPath)))
+          .itemWriter(stencil("page.html"))
         ]
       )
 
