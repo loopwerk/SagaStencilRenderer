@@ -1,9 +1,12 @@
 import Stencil
 import Saga
 
-public func stencil(_ template: String, environment: Environment) -> ((RenderingContext) throws -> String) {
+public var defaultStencilEnvironment = Environment()
+
+public func stencil(_ template: String, environment: Environment? = nil) -> ((RenderingContext) throws -> String) {
   return { context in
-    return try environment.renderTemplate(name: template, context: context.asDictionary())
+    let env = environment ?? defaultStencilEnvironment
+    return try env.renderTemplate(name: template, context: context.asDictionary())
   }
 }
 
@@ -19,7 +22,6 @@ extension ItemRenderingContext: RenderingContext {
       "item": item,
       "items": items,
       "allItems": allItems,
-      "siteMetadata": siteMetadata,
     ]
   }
 }
@@ -29,8 +31,8 @@ extension ItemsRenderingContext: RenderingContext {
     return [
       "items": items,
       "allItems": allItems,
-      "siteMetadata": siteMetadata,
       "paginator": paginator as Any,
+      "outputPath": outputPath
     ]
   }
 }
@@ -41,8 +43,8 @@ extension PartitionedRenderingContext: RenderingContext {
       "key": key,
       "items": items,
       "allItems": allItems,
-      "siteMetadata": siteMetadata,
       "paginator": paginator as Any,
+      "outputPath": outputPath
     ]
   }
 }
