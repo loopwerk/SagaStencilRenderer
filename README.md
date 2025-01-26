@@ -44,28 +44,14 @@ import SagaParsleyMarkdownReader
 import SagaStencilRenderer
 import Stencil
 
-// SiteMetadata is given to every template.
-// You can put whatever you want in here, as long as it's Decodable.
-struct SiteMetadata: Metadata {
-  let url: URL
-  let name: String
-}
-
-let siteMetadata = SiteMetadata(
-  url: URL(string: "http://www.example.com")!,
-  name: "Example website"
-)
-
 @main
 struct Run {
   static func main() async throws {
-    let saga = try Saga(input: "content", output: "deploy", siteMetadata: siteMetadata)
+    let saga = try Saga(input: "content", output: "deploy")
 
     try await saga
-      // All the Markdown files will be parsed to html,
-      // using the default EmptyMetadata as the Item's metadata type.
+      // All the Markdown files will be parsed to html.
       .register(
-        metadata: EmptyMetadata.self,
         readers: [.parsleyMarkdownReader()],
         itemWriteMode: .keepAsFile,
         writers: [
@@ -91,7 +77,7 @@ Please check out the [Example app](https://github.com/loopwerk/SagaStencilRender
 
 
 ## Extending the Stencil Environment
-You can extend the `Environment` with your own tags and filters, see the [official Stencil docs](https://stencil.fuller.li/en/latest/custom-template-tags-and-filters.html). This is why you need to pass in an `Environment`, instead of SagaStencilRenderer creating one for you.
+You can extend the `Environment` with your own tags and filters, see the [official Stencil docs](https://stencil.fuller.li/en/latest/custom-template-tags-and-filters.html).
 
 For example:
 
