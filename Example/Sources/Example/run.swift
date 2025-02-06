@@ -22,20 +22,15 @@ struct Run {
         .register(
           folder: "apps",
           metadata: AppMetadata.self,
-          readers: [.parsleyMarkdownReader()],
-          writers: [
-            .listWriter(stencil("apps.html"))
-          ]
+          readers: [.parsleyMarkdownReader],
+          writers: [.listWriter(stencil("apps.html"))]
         )
     
       // All the Markdown files will be parsed to html,
       // using the default EmptyMetadata as the Item's metadata type.
       .register(
-        readers: [.parsleyMarkdownReader()],
-        itemWriteMode: .keepAsFile,
-        writers: [
-          .itemWriter(stencil("page.html"))
-        ]
+        readers: [.parsleyMarkdownReader],
+        writers: [.itemWriter(stencil("page.html"))]
       )
 
       // Run the steps we registered above
