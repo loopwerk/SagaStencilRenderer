@@ -1,5 +1,5 @@
-import Stencil
 import Saga
+import Stencil
 
 public var defaultStencilEnvironment = Environment()
 
@@ -32,7 +32,7 @@ extension ItemsRenderingContext: RenderingContext {
       "items": items,
       "allItems": allItems,
       "paginator": paginator as Any,
-      "outputPath": outputPath
+      "outputPath": outputPath,
     ]
   }
 }
@@ -44,7 +44,7 @@ extension PartitionedRenderingContext: RenderingContext {
       "items": items,
       "allItems": allItems,
       "paginator": paginator as Any,
-      "outputPath": outputPath
+      "outputPath": outputPath,
     ]
   }
 }
