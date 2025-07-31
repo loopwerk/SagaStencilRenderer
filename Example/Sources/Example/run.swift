@@ -40,7 +40,3 @@ struct Run {
       .staticFiles()
   }
 }
-
-func getEnvironment(root: Path) -> Environment {
-  Environment(loader: FileSystemLoader(paths: [root + "templates"]))
-}
