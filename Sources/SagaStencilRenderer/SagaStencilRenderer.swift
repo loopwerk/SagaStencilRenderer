@@ -1,9 +1,10 @@
 import Saga
 import Stencil
 
-public var defaultStencilEnvironment = Environment()
+nonisolated(unsafe) public var defaultStencilEnvironment = Environment()
 
-public func stencil(_ template: String, environment: Environment? = nil) -> ((RenderingContext) throws -> String) {
+public func stencil(_ template: String, environment: Environment? = nil) -> (@Sendable (RenderingContext) throws -> String) {
+  nonisolated(unsafe) let environment = environment
   return { context in
     let env = environment ?? defaultStencilEnvironment
     return try env.renderTemplate(name: template, context: context.asDictionary())
