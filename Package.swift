@@ -14,7 +14,7 @@ let package = Package(
     ),
   ],
   dependencies: [
-    .package(url: "https://github.com/loopwerk/Saga", from: "2.0.3"),
+    .package(url: "https://github.com/loopwerk/Saga", "2.0.3"..<"4.0.0"),
     .package(url: "https://github.com/stencilproject/Stencil", from: "0.14.0"),
   ],
   targets: [
