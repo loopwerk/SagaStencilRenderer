@@ -7,25 +7,23 @@ It comes with a free function named `stencil` which takes an HTML template and a
 Package.swift
 
 ``` swift
-// swift-tools-version:5.5
+// swift-tools-version:6.0
 
 import PackageDescription
 
 let package = Package(
   name: "Example",
   platforms: [
-    .macOS(.v12)
+    .macOS(.v14)
   ],
   dependencies: [
-    .package(url: "https://github.com/loopwerk/Saga", from: "1.0.0"),
-    .package(url: "https://github.com/loopwerk/SagaParsleyMarkdownReader", from: "0.5.0"),
-    .package(url: "https://github.com/loopwerk/SagaStencilRenderer", from: "0.4.0")
+    .package(url: "https://github.com/loopwerk/SagaParsleyMarkdownReader", from: "1.0.0"),
+    .package(url: "https://github.com/loopwerk/SagaStencilRenderer", from: "1.0.0")
   ],
   targets: [
     .target(
       name: "Example",
       dependencies: [
-        "Saga",
         "SagaParsleyMarkdownReader",
         "SagaStencilRenderer"
       ]
@@ -39,38 +37,25 @@ main.swift:
 ```swift
 import Foundation
 import Saga
-import PathKit
+import SagaPathKit
 import SagaParsleyMarkdownReader
 import SagaStencilRenderer
 import Stencil
 
-@main
-struct Run {
-  static func main() async throws {
-    let saga = try Saga(input: "content", output: "deploy")
+let saga = try Saga(input: "content", output: "deploy")
+defaultStencilEnvironment = Environment(loader: FileSystemLoader(paths: [Path(saga.rootPath.string) + "templates"]))
 
-    try await saga
-      // All the Markdown files will be parsed to html.
-      .register(
-        readers: [.parsleyMarkdownReader()],
-        itemWriteMode: .keepAsFile,
-        writers: [
-          .itemWriter(stencil("page.html", environment: getEnvironment(root: saga.rootPath)))
-        ]
-      )
+try await saga
+  // All the Markdown files will be parsed to html.
+  .register(
+    readers: [.parsleyMarkdownReader],
+    writers: [
+      .itemWriter(stencil("page.html"))
+    ]
+  )
 
-      // Run the steps we registered above
-      .run()
-
-      // All the remaining files that were not parsed to markdown, so for example images, raw html files and css,
-      // are copied as-is to the output folder.
-      .staticFiles()
-  }
-}
-
-func getEnvironment(root: Path) -> Environment {
-  Environment(loader: FileSystemLoader(paths: [root + "templates"]))
-}
+  // Run the steps we registered above
+  .run()
 ```
 
 Please check out the [Example app](https://github.com/loopwerk/SagaStencilRenderer/tree/main/Example) to play around.
