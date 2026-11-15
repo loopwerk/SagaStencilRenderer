@@ -24,8 +24,9 @@ try await saga
   )
 
   // All the Markdown files will be parsed to html,
-  // using the default EmptyMetadata as the Item's metadata type.
+  // using EmptyMetadata as the Item's metadata type.
   .register(
+    metadata: EmptyMetadata.self,
     readers: [.parsleyMarkdownReader],
     writers: [.itemWriter(stencil("page.html"))]
   )
